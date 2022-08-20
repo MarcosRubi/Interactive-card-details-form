@@ -1,3 +1,4 @@
+//ANIMATION WHEN LOADING THE SITE
 const cardBack = document.querySelector(".card__data__back");
 const cardFront = document.querySelector(".card__data__front");
 const inputs = document.querySelectorAll(".input-group");
@@ -17,6 +18,7 @@ const observer = new IntersectionObserver(startAnimation, {
   threshold: 0.1,
 });
 
+
 observer.observe(cardBack);
 observer.observe(cardFront);
 inputs.forEach((input) => {
@@ -24,14 +26,8 @@ inputs.forEach((input) => {
 });
 observer.observe(btn);
 observer.observe(attribution);
+//END CODE FOR ANIMATIONS
 
-const templateModal = `
-<div class="modal visible">
-    <img src="images/icon-complete.svg" alt="Logo Complete">
-    <h1>THANK YOU!</h1>
-    <p>We've added your card details</p>
-    <button class="btn">Continue</button>
-</div>`;
 
 const inputCardName = document.getElementById("txtName");
 const spanName = document.getElementById("name");
@@ -96,6 +92,7 @@ evts.forEach((evt) => {
 
   // VALIDATE CARD NUMBER
   inputCardNumber.addEventListener(evt, () => {
+    spanCardNumber.innerHTML = inputCardNumber.value;
     if (inputCardNumber.value == undefined || inputCardNumber.value.trim().length <= 0) {
       inputCardNumber.classList.add("border");
       spanCardNumber.innerHTML = "0000 0000 0000 0000";
@@ -103,9 +100,14 @@ evts.forEach((evt) => {
       isValidCardNumber= false
       return;
     }
+    if(inputCardNumber.value.trim().length <= 18){
+      msgErrorCardNumber.innerHTML = "The card must have 16 digits"
+      msgErrorCardNumber.classList.add('visible')
+      isValidCardNumber= false
+      return
+    }
 
     inputCardNumber.classList.remove("border");
-    spanCardNumber.innerHTML = inputCardNumber.value;
     msgErrorCardNumber.classList.remove("visible");
     isValidCardNumber= true
   });
@@ -113,7 +115,7 @@ evts.forEach((evt) => {
 
   //VALIDATE CARD MONTH
   inputCardMonth.addEventListener(evt, () => {
-    if (inputCardMonth.value == undefined || inputCardMonth.value.trim().length <= 0) {
+    if (inputCardMonth.value == undefined || inputCardMonth.value.trim().length <= 1) {
       inputCardMonth.classList.add("border");
       spanCardDate.innerHTML = "00/00"
       msgErrorDate.classList.add("visible");
@@ -131,7 +133,7 @@ evts.forEach((evt) => {
 
   //VALIDATE CARD YEAR
   inputCardYear.addEventListener(evt, () => {
-    if (inputCardYear.value == undefined || inputCardYear.value.trim().length <= 0 || parseInt(inputCardYear.value) <= 21 || parseInt(inputCardYear.value) > 27) {
+    if (inputCardYear.value == undefined || inputCardYear.value.trim().length <= 1 || parseInt(inputCardYear.value) <= 21 || parseInt(inputCardYear.value) > 27) {
       inputCardYear.classList.add("border");
       spanCardDate.innerHTML = date[0] + "/00"
       msgErrorDate.innerHTML = "Wrong card date"
@@ -150,16 +152,23 @@ evts.forEach((evt) => {
 
   // VALIDATE CARD CVC
   inputCardCVC.addEventListener(evt, () => {
-    if (inputCardCVC.value == undefined || inputCardCVC.value.trim().length <= 2) {
+    spanCardCVC.innerHTML = inputCardCVC.value;
+
+    if (inputCardCVC.value == undefined || inputCardCVC.value.trim().length <= 0) {
       inputCardCVC.classList.add("border");
       spanCardCVC.innerHTML = "000";
       msgErrorCVC.classList.add("visible");
       isValidCardCVC = false
       return;
     }
+    if(inputCardCVC.value.trim().length <= 2){
+      msgErrorCVC.innerHTML = "The CVC must be 3 digits"
+      msgErrorCVC.classList.add('visible')
+      isValidCardCVC = false
+      return
+    }
 
     inputCardCVC.classList.remove("border");
-    spanCardCVC.innerHTML = inputCardCVC.value;
     msgErrorCVC.classList.remove("visible");
     isValidCardCVC = true
   });
@@ -168,6 +177,33 @@ evts.forEach((evt) => {
 
 function validate(){
   if(isValidCardCVC && isValidCardName && isValidCardYear && isValidCardMonth && isValidCardNumber){
-    document.querySelector('.card__form').innerHTML = templateModal
+    //HIDE FORM AND SHOW MODAL CONFIRM
+    document.querySelector('.modal').classList.add('visible')
+    document.querySelector('.card__form').classList.add('hide')
   }
+}
+function resetForm(){
+  //HIDE MODAL AND SHOW FORM
+  document.querySelector('.modal').classList.remove('visible')
+  document.querySelector('.card__form').classList.remove('hide')
+
+    //CLEAN INPUTS
+    inputCardName.value = ""
+    inputCardNumber.value = ""
+    inputCardMonth.value = ""
+    inputCardYear.value = ""
+    inputCardCVC.value = ""
+
+    //RESET BOLEANS
+    isValidCardName = false
+    isValidCardNumber = false
+    isValidCardMonth = false
+    isValidCardYear = false
+    isValidCardCVC = false
+
+    //CLEAN DATA CARD
+    spanName.innerHTML = "JANE APPLESSED"
+    spanCardNumber.innerHTML = "0000 0000 0000 0000"
+    spanCardDate.innerHTML = "00/00"
+    spanCardCVC.innerHTML = "000"
 }
