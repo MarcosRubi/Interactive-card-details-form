@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Interactive card details form</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <main class="main-container">
+    <section class="card">
+      <div class="card__data">
+        <div class="card__data__back p-relative container">
+          <img src="images/bg-card-back.png" alt="Card Back">
+          <div class="p-absolute" id="CVC">
+            <span>000</span>
+          </div>
+        </div>
+        <div class="card__data__front p-relative container">
+          <img src="images/bg-card-front.png" alt="Card Front">
+          <div class="p-absolute">
+            <div class="card__data__front--logo">
+              <img src="images/card-logo.svg" alt="Card Logo">
+            </div>
+            <div class="card__data__front--cardnumber">
+              <span id="cardNumber">0000 0000 0000 0000</span>
+            </div>
+            <div class="d-flex jc-between align-center w-250">
+              <div class="card__data__front--name">
+                <span id="name">JANE APPLESSED</span>
+              </div>
+              <div class="card__data__front--date">
+                <span id="date">00/00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form method="POST" class="card__form" onsubmit="return false;">
+        <div class="input-group part-name">
+          <label for="txtName">Cardholder Name</label>
+          <input type="text" name="txtName" id="txtName" placeholder="e.g. Jane Appleseed" required="">
+          <span class="error p-absolute" id="errorCardName">Wrong format, text only</span>
+        </div>
+        <div class="input-group part-number">
+          <label for="txtCardNumber">Card Number</label>
+          <input type="text" name="txtCardNumber" id="txtCardNumber" placeholder="e.g. 1234 5678 9123 0000" required="">
+          <span class="error p-absolute" id="errorCardNumber">Wrong format, numbers only</span>
+        </div>
+        <div class="d-flex jc-between">
+          <div class="input-group card__form--date part-date">
+            <label for="txtCardMonth">Exp. Date (MM/YY)</label>
+            <div class="d-flex">
+              <input type="number" name="txtCardMonth" id="txtCardMonth" placeholder="MM" max="12" min="01" required="">
+              <input type="number" name="txtCardYear" id="txtCardYear" placeholder="YY" required="">
+            </div>
+            <span class="error p-absolute" id="errorDate">Cant be blank</span>
+          </div>
+          <div class="input-group card__form--cvc part-cvc">
+            <label for="txtCardCVC">CVC</label>
+            <input type="number" name="txtCardCVC" id="txtCardCVC" placeholder="e.g. 123" required="">
+            <span class="error p-absolute" id="errorCVC">Cant be blank</span>
+          </div>
+        </div>
+        <button class="btn confirm" onclick="validate();">Confirm</button>
+      </form>
+    </section>
+  </main>
+  
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+    Coded by <a href="https://mrubi.vercel.app/" target="_blank">Marcos Rubí</a>.
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js" integrity="sha512-KaIyHb30iXTXfGyI9cyKFUIRSSuekJt6/vqXtyQKhQP6ozZEGY8nOtRS6fExqE4+RbYHus2yGyYg1BrqxzV6YA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="js/script.js"></script>
+</body>
+
+</html>
